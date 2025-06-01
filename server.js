@@ -3,6 +3,8 @@ const router = require("./routes/auth.route");
 const { config } = require("dotenv");
 const cors = require("cors");
 const bodyChecker = require("./middlewares/bodyChecker");
+const swaggerUi = require("swagger-ui-express");
+const { swaggerDocs } = require("./config/swagger.config");
 
 config();
 
@@ -14,7 +16,7 @@ app.use(express.json());
 
 app.use(cors({ origin: "*" }));
 
-app.use(bodyChecker);
+// app.use(bodyChecker);
 
 const PORT = process.env.PORT || 3000;
 
@@ -23,6 +25,8 @@ app.use("/api/auth", router);
 app.get("/", async (_, res) => {
   res.send("Working fine!");
 });
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // app.get("/users", async (req, res) => {
 //   try {
@@ -38,4 +42,7 @@ app.get("/", async (_, res) => {
 //   }
 // });
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
+  console.log(`Swagger Docs: http://localhost:${PORT}/api-docs`);
+});
