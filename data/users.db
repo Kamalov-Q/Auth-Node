@@ -1,0 +1,6 @@
+{"name":"Moderator","email":"moderator@mail.com","password":"$2b$10$zgS1CI8GH.6ifMyLk7k5dOpGrJ1Eem.IoWejgX1nmWrtgp7yZzu0G","role":"moderator","_id":"DmV7Sr1UHINpaYuu"}
+{"name":"User 8","email":"user8@mail.com","password":"$2b$10$8M61bHm.xeLyeapDvkCBFOA7NempdBI0z/DycQi6Wi9p96fipd3xu","role":"user","_id":"GHy6KVXoVSSLPLHQ"}
+{"name":"User 6","email":"user6@mail.com","password":"$2b$10$r.mOFRFKDNwgzF8STkRlZeMiC4JUIjSfO40ulAACj1MOb4yEC0C1O","role":"admin","_id":"MCcolJMtUqk4ELyh"}
+{"name":"User 9","email":"user9@mail.com","password":"$2b$10$gtaiVat6NeNGmytBsV4krezvcYw/5G75tl1xsWXmcgdZhBCIM4mmi","role":"moderator","_id":"NrGJC3X0sIlXM5EB"}
+{"name":"Admin","email":"admin@mail.com","password":"$2b$10$MRXBpz7A/YDTnZeV8ZqAMuD2u2/lJt2bVJpy01JAjuKLqK9O8.rbi","role":"admin","_id":"SLJP9e0daHkwzfme"}
+{"name":"User 7","email":"user7@mail.com","password":"$2b$10$5mujdo83pFyUC/jrDmOQGOz97vF7OR8nXWyJJBJ8u9R0uY.Xq5gcG","role":"admin","_id":"wQb5rsWLgjJuRrAJ"}

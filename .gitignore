@@ -1,3 +1,5 @@
 .env
 .env.local
 .env.*
+
+data/db/users.db
