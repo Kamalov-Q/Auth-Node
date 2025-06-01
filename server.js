@@ -6,6 +6,7 @@ const bodyChecker = require("./middlewares/bodyChecker");
 const ensureAuthentification = require("./middlewares/authentification");
 const ensureAuthorizeUser = require("./middlewares/authorizeUser");
 const authController = require("./controllers/auth.controller");
+const users = require("./db/users.db");
 
 config();
 
@@ -29,6 +30,20 @@ app.use("/api/auth", router);
 
 app.get("/", async (_, res) => {
   res.send("Working fine!");
+});
+
+app.get("/users", async (req, res) => {
+  try {
+    const user = await users.find({});
+    return res
+      .status(200)
+      .json({ message: "All users", allUsers: user, count: user.length });
+  } catch (error) {``
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: `Internal Server Error : ${error.message}` });
+  }
 });
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
