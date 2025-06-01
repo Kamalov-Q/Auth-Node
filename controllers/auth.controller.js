@@ -94,9 +94,12 @@ exports.getCurrentUser = async (req, res) => {
   try {
     const user = await users.findOne({ _id: req.user.id });
 
-    return res
-      .status(200)
-      .json({ name: user.name, email: user.email, _id: user._id });
+    return res.status(200).json({
+      name: user.name,
+      email: user.email,
+      _id: user._id,
+      role: user.role,
+    });
   } catch (error) {
     console.error(error);
     return res
@@ -105,11 +108,14 @@ exports.getCurrentUser = async (req, res) => {
   }
 };
 
-exports.getAdminUsers = async (req, res) => {
+exports.getAllUsers = async (req, res) => {
   try {
+    const allUsers = await users.find({});
+
     return res.status(200).json({
-      message:
-        "Only Admins can access this route And you are admin!!! Welcome Back sir",
+      message: "All users Everyone can access except the user",
+      allUsers,
+      count: allUsers.length,
     });
   } catch (error) {
     console.error(error);
@@ -123,7 +129,7 @@ exports.getModeratorUsers = async (req, res) => {
   try {
     return res.status(200).json({
       message:
-        "Only Moderators and admins can access this route And you are one of them. Welcome Back sir",
+        "Only Moderators, admins, directors and superadmins can access this route And you are one of them. Welcome Back sir",
     });
   } catch (error) {
     console.error(error);
@@ -132,3 +138,49 @@ exports.getModeratorUsers = async (req, res) => {
       .json({ message: `Internal Server Error : ${error.message}` });
   }
 };
+
+exports.getAdminUsers = async (req, res) => {
+  try {
+    const user = await users.findOne({ _id: req.user.id });
+
+    return res.status(200).json({
+      message: `Only Admins, directors and superadmins can access this route And you are admin!!! Your role is ${user.role}. Welcome Back sir`,
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: `Internal Server Error : ${error.message}` });
+  }
+};
+
+exports.getDirectorUsers = async (req, res) => {
+  try {
+    const user = await users.findOne({ _id: req.user.id });
+
+    return res.status(200).json({
+      message: `Only Directors and superadmins can access this route Your role is ${user.role}. Welcome Back sir`,
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: `Internal Server Error : ${error.message}` });
+  }
+};
+
+exports.getSuperAdminUsers = async (req, res) => {
+  try {
+    const user = await users.findOne({ _id: req.user.id });
+    return res.status(200).json({
+      message: `Only SuperAdmins can access this route Your role is ${user.role}. Welcome Back sir`,
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: `Internal Server Error : ${error.message}` });
+  }
+};
+
+// user, moderator, admin, director, superadmin

@@ -1,6 +1,5 @@
-{"name":"Moderator","email":"moderator@mail.com","password":"$2b$10$zgS1CI8GH.6ifMyLk7k5dOpGrJ1Eem.IoWejgX1nmWrtgp7yZzu0G","role":"moderator","_id":"DmV7Sr1UHINpaYuu"}
-{"name":"User 8","email":"user8@mail.com","password":"$2b$10$8M61bHm.xeLyeapDvkCBFOA7NempdBI0z/DycQi6Wi9p96fipd3xu","role":"user","_id":"GHy6KVXoVSSLPLHQ"}
-{"name":"User 6","email":"user6@mail.com","password":"$2b$10$r.mOFRFKDNwgzF8STkRlZeMiC4JUIjSfO40ulAACj1MOb4yEC0C1O","role":"admin","_id":"MCcolJMtUqk4ELyh"}
-{"name":"User 9","email":"user9@mail.com","password":"$2b$10$gtaiVat6NeNGmytBsV4krezvcYw/5G75tl1xsWXmcgdZhBCIM4mmi","role":"moderator","_id":"NrGJC3X0sIlXM5EB"}
-{"name":"Admin","email":"admin@mail.com","password":"$2b$10$MRXBpz7A/YDTnZeV8ZqAMuD2u2/lJt2bVJpy01JAjuKLqK9O8.rbi","role":"admin","_id":"SLJP9e0daHkwzfme"}
-{"name":"User 7","email":"user7@mail.com","password":"$2b$10$5mujdo83pFyUC/jrDmOQGOz97vF7OR8nXWyJJBJ8u9R0uY.Xq5gcG","role":"admin","_id":"wQb5rsWLgjJuRrAJ"}
+{"name":"superadmin","email":"superadmin@mail.com","password":"$2b$10$e3elKw3JL8xQUVRDV0SAC.UQk3uixUxrekfFK0Daq8ZvKwTMZQkyS","role":"superadmin","_id":"FhSeGtMIDJ6WXSKD"}
+{"name":"user","email":"user@mail.com","password":"$2b$10$9H7puFFi94hjB1N3FL6FVOxZVPNhMgP5Fqm1TumnWyzYM97aMnSyO","role":"user","_id":"NqOc0K6c2oD3Lw6y"}
+{"name":"director","email":"director@mail.com","password":"$2b$10$4i8Wjm4SI8jd.VHDCw9pA.QzfWxhzC2SJzDqU69cMFn5dOvViEUau","role":"director","_id":"cte2YYoeYgSwxkrj"}
+{"name":"admin","email":"admin@mail.com","password":"$2b$10$lf8EXYYj003AFGieriMQD.0Qb.pq7.cMnnFCeCeevoQyYfLcc3f5S","role":"admin","_id":"lfF2E0ghhs05cS2V"}
+{"name":"moderator","email":"moderator@mail.com","password":"$2b$10$//vzDU6dwkLRwcKJ0SiILusoqLyLF8rLjjWRLNzrOti3LpTaQy8Y6","role":"moderator","_id":"xuJAWZSbQJVeQseH"}

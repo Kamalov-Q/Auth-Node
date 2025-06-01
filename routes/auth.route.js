@@ -11,21 +11,44 @@ const ensureAuthorizeUser = require("../middlewares/authorizeUser");
 router.post("/register", validateRegisterBody, authController.register);
 router.post("/login", validateLoginBody, authController.login);
 
-router.get("/users/current", ensureAuthentification, authController.getCurrentUser);
+router.get(
+  "/users/current",
+  ensureAuthentification,
+  authController.getCurrentUser
+);
+router.get(
+  "/users/all",
+  ensureAuthentification,
+  ensureAuthorizeUser(["admin", "moderator", "director", "superadmin"]),
+  authController.getAllUsers
+);
 
 router.get(
-  "/admin/getUsers",
+  "/moderator/users",
   ensureAuthentification,
-  ensureAuthorizeUser(["admin"]),
+  ensureAuthorizeUser(["moderator", "admin", "director", "superadmin"]),
+  authController.getModeratorUsers
+);
+
+router.get(
+  "/admin/users",
+  ensureAuthentification,
+  ensureAuthorizeUser(["admin", "director", "superadmin"]),
   authController.getAdminUsers
 );
 
 router.get(
-  "/moderator/getUsers",
+  "/director/users",
   ensureAuthentification,
-  ensureAuthorizeUser(["moderator", "admin"]),
-  authController.getModeratorUsers
+  ensureAuthorizeUser(["director", "superadmin"]),
+  authController.getDirectorUsers
 );
 
+router.get(
+  "/superadmin/users",
+  ensureAuthentification,
+  ensureAuthorizeUser(["superadmin"]),
+  authController.getSuperAdminUsers
+);
 
 module.exports = router;

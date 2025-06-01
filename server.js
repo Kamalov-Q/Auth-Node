@@ -3,10 +3,6 @@ const router = require("./routes/auth.route");
 const { config } = require("dotenv");
 const cors = require("cors");
 const bodyChecker = require("./middlewares/bodyChecker");
-const ensureAuthentification = require("./middlewares/authentification");
-const ensureAuthorizeUser = require("./middlewares/authorizeUser");
-const authController = require("./controllers/auth.controller");
-const users = require("./db/users.db");
 
 config();
 
