@@ -13,6 +13,10 @@ const swaggerOptions = {
         url: "http://localhost:3000/api",
         description: "Local Server",
       },
+      {
+        url: "https://auth-node-wshi.onrender.com/",
+        description: "Production Server",
+      },
     ],
     components: {
       securitySchemes: {
