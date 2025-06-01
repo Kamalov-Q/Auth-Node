@@ -24,26 +24,22 @@ const PORT = process.env.PORT || 3000;
 
 app.use("/api/auth", router);
 
-// console.log(typeof ensureAuthentification); // should be 'function'
-// console.log(typeof ensureAuthorizeUser(["admin"])); // should be 'function'
-// console.log(typeof authController.getAdminUsers); // should be 'function'
-
 app.get("/", async (_, res) => {
   res.send("Working fine!");
 });
 
-app.get("/users", async (req, res) => {
-  try {
-    const user = await users.find({});
-    return res
-      .status(200)
-      .json({ message: "All users", allUsers: user, count: user.length });
-  } catch (error) {``
-    console.error(error);
-    return res
-      .status(500)
-      .json({ message: `Internal Server Error : ${error.message}` });
-  }
-});
+// app.get("/users", async (req, res) => {
+//   try {
+//     const user = await users.find({});
+//     return res
+//       .status(200)
+//       .json({ message: "All users", allUsers: user, count: user.length });
+//   } catch (error) {``
+//     console.error(error);
+//     return res
+//       .status(500)
+//       .json({ message: `Internal Server Error : ${error.message}` });
+//   }
+// });
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
