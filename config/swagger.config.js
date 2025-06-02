@@ -20,14 +20,14 @@ const swaggerOptions = {
     ],
     components: {
       securitySchemes: {
-        BearerAuth: {
+        bearerAuth: {
           type: "http",
           scheme: "bearer",
           bearerFormat: "JWT",
         },
       },
     },
-    security: [{ BearerAuth: [] }],
+    security: [{ bearerAuth: [] }],
   },
   apis: ["./swagger/*.js"], // You will document endpoints here
 };
