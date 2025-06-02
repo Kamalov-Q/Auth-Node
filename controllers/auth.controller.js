@@ -1,6 +1,10 @@
-const users = require("../db/users.db");
-const { generateToken } = require("../utils/generateToken");
+const jwt = require("jsonwebtoken");
+const {
+  generateToken,
+  generateRefreshToken,
+} = require("../utils/generateToken");
 const { hashPassword, comparePassword } = require("../utils/hashPassword");
+const { users, userRefreshToken, userInvalidToken } = require("../db/users.db");
 
 exports.register = async (req, res) => {
   try {
@@ -71,6 +75,12 @@ exports.login = async (req, res) => {
     }
 
     const accessToken = generateToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    await userRefreshToken.insert({
+      userId: user._id,
+      refreshToken,
+    });
 
     return res.status(200).json({
       message: "Login successful",
@@ -81,7 +91,85 @@ exports.login = async (req, res) => {
         role: user.role,
       },
       accessToken,
+      refreshToken,
     });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: `Internal Server Error : ${error.message}` });
+  }
+};
+
+exports.refreshToken = async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+
+    if (!refreshToken) {
+      return res.status(422).json({ message: "Please provide refresh token" });
+    }
+
+    const decodedRefreshToken = jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET
+    );
+
+    const user = await users.findOne({ _id: decodedRefreshToken.userId });
+
+    console.log(decodedRefreshToken, "decodedRefreshToken");
+
+    const userRefToken = await userRefreshToken.findOne({
+      refreshToken,
+      userId: decodedRefreshToken.userId,
+    });
+
+    if (!userRefToken) {
+      return res.status(401).json({ message: "Invalid refresh token" });
+    }
+
+    await userRefreshToken.remove({ _id: userRefToken._id });
+    await userRefreshToken.compactDatafile();
+
+    const accessToken = generateToken(user);
+    const newRefreshToken = generateRefreshToken(user);
+
+    await userRefreshToken.insert({
+      refreshToken: newRefreshToken,
+      userId: decodedRefreshToken.userId,
+    });
+
+    return res.status(200).json({
+      accessToken,
+      refreshToken: newRefreshToken,
+    });
+  } catch (error) {
+    if (
+      error instanceof jwt.TokenExpiredError ||
+      error instanceof jwt.JsonWebTokenError
+    ) {
+      return res
+        .status(401)
+        .json({ message: "Refresh token invalid or expired" });
+    }
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: `Internal Server Error : ${error.message}` });
+  }
+};
+
+exports.logout = async (req, res) => {
+  try {
+    await userRefreshToken.removeMany({ userId: req.user.id });
+    await userRefreshToken.compactDatafile();
+
+    await userInvalidToken.insert({
+      accessToken: req.accessToken.value,
+      userId: req.user.id,
+      expirationTime: req.accessToken.exp,
+    });
+
+    return res.status(204).send();
   } catch (error) {
     console.error(error);
     return res
@@ -93,6 +181,8 @@ exports.login = async (req, res) => {
 exports.getCurrentUser = async (req, res) => {
   try {
     const user = await users.findOne({ _id: req.user.id });
+
+    console.log(user, "User from current user");
 
     return res.status(200).json({
       name: user.name,
@@ -110,7 +200,7 @@ exports.getCurrentUser = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const allUsers = await users.find({});
+    const allUsers = await users.find();
 
     return res.status(200).json({
       message: "All users Everyone can access except the user",

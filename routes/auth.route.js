@@ -10,6 +10,12 @@ const ensureAuthorizeUser = require("../middlewares/authorizeUser");
 
 router.post("/register", validateRegisterBody, authController.register);
 router.post("/login", validateLoginBody, authController.login);
+router.post(
+  "/refresh-token",
+  authController.refreshToken
+);
+
+router.get("/logout", ensureAuthentification, authController.logout);
 
 router.get(
   "/users/current",

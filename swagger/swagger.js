@@ -9,8 +9,8 @@
  *       content:
  *         application/json:
  *           schema:
- *             type: object
  *             required: [name, email, password]
+ *             type: object
  *             properties:
  *               name:
  *                 type: string
@@ -28,21 +28,23 @@
  *         description: User already exists
  *       422:
  *         description: Missing required fields
+ *       500:
+ *         description: Internal server error
  */
 
 /**
  * @swagger
  * /api/auth/login:
  *   post:
- *     summary: Log in an existing user
+ *     summary: Authenticate user and return tokens
  *     tags: [Auth]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
  *             required: [email, password]
+ *             type: object
  *             properties:
  *               email:
  *                 type: string
@@ -55,6 +57,52 @@
  *         description: Invalid credentials
  *       404:
  *         description: User not found
+ *       422:
+ *         description: Missing required fields
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /api/auth/refresh-token:
+ *   post:
+ *     summary: Get a new access token using refresh token
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required: [refreshToken]
+ *             type: object
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: New access token issued
+ *       401:
+ *         description: Invalid or expired refresh token
+ *       422:
+ *         description: Missing refresh token
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
+ * /api/auth/logout:
+ *   post:
+ *     summary: Logout and invalidate tokens
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       204:
+ *         description: Logout successful
+ *       500:
+ *         description: Internal server error
  */
 
 /**
@@ -64,7 +112,7 @@
  *     summary: Get current logged in user
  *     tags: [Auth]
  *     security:
- *       - BearerAuth: []
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: User profile info
@@ -88,7 +136,7 @@
  *     summary: Moderator-level route
  *     tags: [Auth]
  *     security:
- *       - BearerAuth: []
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Moderator access granted
@@ -96,12 +144,12 @@
 
 /**
  * @swagger
- *  /api/auth/admin/users:
+ * /api/auth/admin/users:
  *   get:
  *     summary: Admin-level route
  *     tags: [Auth]
  *     security:
- *       - BearerAuth: []
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Admin access granted
@@ -109,12 +157,12 @@
 
 /**
  * @swagger
- *  /api/auth/director/users:
+ * /api/auth/director/users:
  *   get:
  *     summary: Director-level route
  *     tags: [Auth]
  *     security:
- *       - BearerAuth: []
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Director access granted
@@ -122,12 +170,12 @@
 
 /**
  * @swagger
- *  /api/auth/superadmin/users:
+ * /api/auth/superadmin/users:
  *   get:
  *     summary: Superadmin-level route
  *     tags: [Auth]
  *     security:
- *       - BearerAuth: []
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Superadmin access granted

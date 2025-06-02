@@ -1,4 +1,4 @@
-const users = require("../db/users.db");
+const { users } = require("../db/users.db");
 
 const ensureAuthorizeUser = (roles = []) => {
   return async (req, res, next) => {

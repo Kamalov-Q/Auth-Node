@@ -5,4 +5,14 @@ const users = DataStore.create({
   autoload: true,
 });
 
-module.exports = users;
+const userRefreshToken = DataStore.create({
+  filename: "./data/userRefreshToken.db",
+  autoload: true,
+});
+
+const userInvalidToken = DataStore.create({
+  filename: "./data/userInvalidToken.db",
+  autoload: true,
+});
+
+module.exports = { users, userRefreshToken, userInvalidToken };
