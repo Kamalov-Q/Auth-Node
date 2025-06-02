@@ -1,1 +1,3 @@
-{"name":"Moderator","email":"moderator@mail.com","password":"$2b$10$774EDJHAl7BFv.5r/59n4uqyHjqD9s27aexIUA1mGMARc/i1C2Zwa","role":"moderator","_id":"GzJ9AhrQLAuqDJwl"}
+{"name":"Admin","email":"admin@mail.com","password":"$2b$10$L8707tpOcWlUN9Uev7/.UORD1CCtcpHe5hcIgOTlSFJLR.Y/8dilm","role":"admin","_id":"e6ibwzD8RibClRMM"}
+{"name":"Moderator","email":"moderator@mail.com","password":"$2b$10$pZPi.7vPHK24a/bNgy0mh.PkNyUyvgLtSiw95cUFiSz5Zq3ET24PO","role":"moderator","_id":"e9daYeTli8oWxTjL"}
+{"email":"moderator2@mail.com","name":"Moderator","password":"$2b$10$fVeyC/ri8ASVmxad/NzHz.HO16nKJ2OnzbC8wRAWbluamV0xHRVyu","role":"moderator","_id":"eXlcYgW9CJHDJAvG"}

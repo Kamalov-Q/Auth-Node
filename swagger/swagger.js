@@ -131,6 +131,71 @@
 
 /**
  * @swagger
+ * /api/auth/moderator/create:
+ *   post:
+ *     tags:
+ *       - Moderator
+ *     summary: Create a new moderator
+ *     description: Allows an authenticated user with roles `admin`, `director`, or `superadmin` to create a new moderator.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - email
+ *               - password
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: moderatorUser
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: moderator@example.com
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: StrongPass123!
+ *     responses:
+ *       201:
+ *         description: Moderator created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Moderator created successfully.
+ *                 moderator:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       example: 12345
+ *                     username:
+ *                       type: string
+ *                       example: moderatorUser
+ *                     email:
+ *                       type: string
+ *                       example: moderator@example.com
+ *       400:
+ *         description: Bad Request - Invalid input data
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *       403:
+ *         description: Forbidden - User not authorized
+ *       500:
+ *         description: Internal server error
+ */
+
+/**
+ * @swagger
  * /api/auth/moderator/users:
  *   get:
  *     summary: Moderator-level route

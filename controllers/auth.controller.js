@@ -215,6 +215,62 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
+//Create a moderator role
+exports.createModerator = async (req, res) => {
+  try {
+    const { email, name, password } = req.body;
+
+    if (!email || String(email).trim() == "") {
+      return res
+        .status(422)
+        .json({ message: "Please provide a valid email address" });
+    }
+
+    if (!name || String(name).trim() == "") {
+      return res.status(422).json({ message: "Please provide a valid name" });
+    }
+
+    if (!password || String(password).trim() == "") {
+      return res
+        .status(422)
+        .json({ message: "Please provide a valid password" });
+    }
+
+    const existingUser = await users.findOne({ email });
+
+    if (existingUser) {
+      return res.status(409).json({ message: "User already exists" });
+    }
+
+    const hashedPassword = await hashPassword(password);
+
+    const newUser = await users.insert({
+      email,
+      name,
+      password: hashedPassword,
+      role: "moderator",
+    });
+
+    const accessToken = generateToken(newUser);
+
+    return res.status(201).json({
+      message: "User registered successfully",
+      user: {
+        name: newUser.name,
+        email: newUser.email,
+        id: newUser._id,
+        role: newUser.role,
+      },
+      accessToken,
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: `Internal Server Error : ${error.message}` });
+  }
+};
+
 exports.getModeratorUsers = async (req, res) => {
   try {
     return res.status(200).json({
