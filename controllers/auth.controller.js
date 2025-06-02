@@ -344,6 +344,7 @@ exports.updateModeratorByRoles = async (req, res) => {
   }
 };
 
+//Delete a moderator by higher roles
 exports.deleteModerator = async (req, res) => {
   try {
     const { modId: _id } = req.params;
