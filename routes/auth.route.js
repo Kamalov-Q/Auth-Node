@@ -40,6 +40,27 @@ router.get(
   authController.getModeratorUsers
 );
 
+router.put(
+  "/moderator/update-profile/:id",
+  ensureAuthentification,
+  ensureAuthorizeUser(["moderator", "admin", "director", "superadmin"]),
+  authController.updateModerator
+);
+
+router.patch(
+  "/moderator/update/:modId",
+  ensureAuthentification,
+  ensureAuthorizeUser(["admin", "director", "superadmin"]),
+  authController.updateModeratorByRoles
+);
+
+router.delete(
+  "/moderator/delete/:modId",
+  ensureAuthentification,
+  ensureAuthorizeUser(["admin", "director", "superadmin"]),
+  authController.deleteModerator
+);
+
 router.get(
   "/admin/users",
   ensureAuthentification,

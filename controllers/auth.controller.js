@@ -271,6 +271,111 @@ exports.createModerator = async (req, res) => {
   }
 };
 
+//Update a moderator role
+exports.updateModerator = async (req, res) => {
+  try {
+    const { id: _id } = req.params;
+    const { email, name } = req.body;
+    if (!email || !name) {
+      return res
+        .status(422)
+        .json({ message: "Please provide all the required fields" });
+    }
+
+    const existingUser = await users.findOne({ _id });
+
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await users.update({ _id }, { $set: { name, email } }, { upsert: true });
+
+    const user = await users.findOne({ _id });
+
+    return res.status(200).json({
+      message: "User updated successfully",
+      user,
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: `Internal Server Error : ${error.message}` });
+  }
+};
+
+//Update a moderator by higher roles
+exports.updateModeratorByRoles = async (req, res) => {
+  try {
+    const { modId: _id } = req.params;
+    const { name, email, password } = req.body;
+
+    // if (!name || !email || !password) {
+    //   return res
+    //     .status(422)
+    //     .json({ message: "Please provide all the required fields" });
+    // }
+
+    const existingUser = await users.findOne({ _id });
+
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const hashedPassword = await hashPassword(password);
+
+    await users.update(
+      { _id },
+      { $set: { name, email, password: hashedPassword } },
+      { upsert: true }
+    );
+
+    const user = await users.findOne({ _id });
+
+    return res.status(200).json({
+      message: "User updated successfully",
+      user,
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: `Internal Server Error : ${error.message}` });
+  }
+};
+
+exports.deleteModerator = async (req, res) => {
+  try {
+    const { modId: _id } = req.params;
+
+    if (!_id) {
+      return res
+        .status(422)
+        .json({ message: "Please provide all the required fields" });
+    }
+
+    const existingUser = await users.findOne({ _id });
+
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await users.remove({ _id });
+
+    const deletedModerator = await users.findOne({ _id });
+
+    return res.status(200).json({
+      message: "User deleted successfully",
+      deletedModerator,
+    });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: `Internal Server Error : ${error.message}` });
+  }
+};
+
 exports.getModeratorUsers = async (req, res) => {
   try {
     return res.status(200).json({
